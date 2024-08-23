@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta charset="UTF-8">
+    <title>FACE RECOGNITION ATTENDANCE SYSTEM</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+    th {text-align: center;}
+    * {
+      font-family: verdana, sans-serif;
+      box-sizing: border-box;
+    }
+     table, th, td {
+      border: 3px solid darkblue;
+     }
+    </style>
+  </head>
+  <body style="background-color:powderblue">
+  <!-- As a link -->
+  <nav class="navbar navbar-dark" style="background-color: #1F456E;">
+    <a class="navbar-brand" href="#">FACE RECOGNITION ATTENDANCE SYSTEM</a>
+  </nav>
+  <br>
+  <br>
+    <table align="center" style="color:darkblue;">
+       <tr  style="color:white;background-color:darkblue" >
+         <th>NAME</th>
+         <th>TIME IN</th>
+         <th>DATE</th>
+       </tr>
+    {% for row in csv %}
+      <tr>
+      {% for col in row %}
+      <td style="width:30%">{{ col }}</td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+  <br>
+  <br>
+  <div class="mx-auto" align="center" style="width: 500px;">
+    <button type="button" onclick="tableToCSV()"  class="btn btn-primary" >
+      DOWNLOAD ATTENDANCE-IN CSV
+    </button>
+  <br><br>
+  </div>
+  <div class="mx-auto">
+    <a href=" http://127.0.0.1:5000/navig">
+      <button type="button" class="btn btn-primary" style="margin-left:20px;">BACK</button>
+    </a>
+  </div>
+  <br><br><br>
+  <script type="text/javascript">
+        function tableToCSV() {
+
+            // Variable to store the final csv data
+            var csv_data = [];
+
+            // Get each row data
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+
+                // Get each column data
+                var cols = rows[i].querySelectorAll('td,th');
+
+                // Stores each csv row data
+                var csvrow = [];
+                for (var j = 0; j < cols.length; j++) {
+
+                    // Get the text data of each cell
+                    // of a row and push it to csvrow
+                    csvrow.push(cols[j].innerHTML);
+                }
+
+                // Combine each column value with comma
+                csv_data.push(csvrow.join(","));
+            }
+
+            // Combine each row data with new line character
+            csv_data = csv_data.join('\n');
+
+            // Call this function to download csv file
+            downloadCSVFile(csv_data);
+
+
+        }
+
+        function downloadCSVFile(csv_data) {
+
+            // Create CSV file object and feed
+            // our csv_data into it
+            CSVFile = new Blob([csv_data], {
+                type: "text/csv"
+            });
+
+            // Create to temporary link to initiate
+            // download process
+            var temp_link = document.createElement('a');
+
+            // Download csv file
+            temp_link.download = "Attendance In.csv";
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+
+            // This link should not be displayed
+            temp_link.style.display = "none";
+            document.body.appendChild(temp_link);
+
+            // Automatically click the link to
+            // trigger download
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+    </script>
+  </body>
+</html>
