@@ -46,4 +46,3 @@ It includes automating attendance tracking using facial recognition technology t
 
 ## Note on Dataset Privacy:
 For privacy reasons, all image datasets in the __IMAGE_FILES__ folder, which contained JPG images of my classmates, have been removed from this project. 
-Please use your own images for the dataset.
